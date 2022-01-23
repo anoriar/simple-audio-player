@@ -10,9 +10,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     MediaPlayer mediaPlayer;
-    boolean isPlay;
     Button playButton;
-    Button pauseButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,21 +18,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.stuff);
         playButton = findViewById(R.id.playBtn);
-        pauseButton = findViewById(R.id.pauseBtn);
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mediaPlayer.isPlaying()){
+                    pause();
+                }else{
+                    play();
+                }
+            }
+        });
     }
 
 
-    public void play(View view) {
+    public void play() {
         mediaPlayer.start();
-        isPlay = true;
-        playButton.setVisibility(View.INVISIBLE);
-        pauseButton.setVisibility(View.VISIBLE);
+        playButton.setText("PAUSE");
     }
 
-    public void pause(View view) {
+    public void pause() {
         mediaPlayer.pause();
-        isPlay = false;
-        pauseButton.setVisibility(View.INVISIBLE);
-        playButton.setVisibility(View.VISIBLE);
+        playButton.setText("PLAY");
     }
 }
